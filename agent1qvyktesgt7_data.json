@@ -1,0 +1,16 @@
+{
+    "latitude": 13.391504,
+    "longitude": 52.506773,
+    "crash_data": {
+        "2024-10-04 14:04:43": {
+            "crash_impact": 0.75,
+            "crash_latitude": 13.399797,
+            "crash_longitude": 52.511022
+        },
+        "2024-10-04 14:07:10": {
+            "crash_impact": 0.75,
+            "crash_latitude": 13.394373,
+            "crash_longitude": 52.506955
+        }
+    }
+}

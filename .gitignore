@@ -1,0 +1,18 @@
+# Ignore the directories
+venv/
+temp/
+
+# Ignore the .env file where API keys and sensitive information is stored
+.env
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore temporary files created by editors or operating systems
+*.swp
+*.swo
+*~

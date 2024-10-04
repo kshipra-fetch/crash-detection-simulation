@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Finder</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #notification {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto py-10">
+        <div class="bg-white shadow-lg rounded-lg p-8 max-w-xl mx-auto">
+            <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Route Finder</h1>
+
+            <form id="routeForm" class="space-y-6">
+                <div>
+                    <label for="address1" class="block text-sm font-medium text-gray-700">From Address</label>
+                    <input type="text" id="address1" name="address1" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter first address" required>
+                </div>
+                <div>
+                    <label for="address2" class="block text-sm font-medium text-gray-700">To Address</label>
+                    <input type="text" id="address2" name="address2" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Enter second address" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Find Route</button>
+                </div>
+            </form>
+
+            <!-- Crash Simulation Button -->
+            <div class="text-center mt-6">
+                <button id="simulateCrash" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Simulate Crash</button>
+            </div>
+
+            <!-- Crash Message Box -->
+            <div id="crashMessageBox" class="mt-6 hidden bg-red-100 p-4 rounded-md text-red-800">
+                <p id="crashMessage">Crash simulation triggered. Rerouting...</p>
+            </div>
+
+            <!-- Notification Box -->
+            <div id="notification" class="mt-6 bg-yellow-100 p-4 rounded-md text-yellow-800">
+                <p id="notificationMessage"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const form = document.getElementById('routeForm');
+    const crashButton = document.getElementById('simulateCrash');
+    const crashMessageBox = document.getElementById('crashMessageBox');
+    const crashMessage = document.getElementById('crashMessage');
+    const notificationBox = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notificationMessage');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        const response = await fetch('/get_route', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            // Handle route data here if needed
+        } else {
+            alert('Error fetching route data.');
+        }
+    });
+
+    crashButton.addEventListener('click', async function() {
+        crashMessageBox.classList.remove('hidden');  // Show the crash message box
+
+        // Trigger the simulation request
+        const response = await fetch('/simulate_crash', {
+            method: 'POST'
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            let notification = data.notification;
+
+            // Show the notification in the box
+            notificationMessage.textContent = notification;
+            notificationBox.style.display = 'block';
+        } else {
+            notificationMessage.textContent = 'Error simulating crash.';
+            notificationBox.style.display = 'block';
+        }
+    });
+    </script>
+
+</body>
+</html>
