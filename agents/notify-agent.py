@@ -39,7 +39,7 @@ async def notify_family(message):
             {
                 "source": "python",
                 "body": message,
-                "to": "+447469060527",
+                "to": "+44999999999",
                 "from": "PythonApp"
             }
         ]
